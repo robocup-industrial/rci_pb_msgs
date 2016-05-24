@@ -7,13 +7,13 @@
 #
 #*****************************************************************************
 
-BASEDIR = ../..
+BASEDIR = ..
 
 include $(BASEDIR)/etc/buildsys/config.mk
 
-PROTOBUF_all = atwork_pb_msgs
+SUBDIRS = atwork_pb_msgs atwork_device_pb_msgs rcll_pb_msgs 
 
-MSGS_atwork_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
+# Explicit dependencies, this is needed to have make bail out if there is any
+# error. This is also necessary for working parallel build (i.e. for dual core)
 
-include $(BUILDSYSDIR)/protobuf.mk
 include $(BUILDSYSDIR)/base.mk

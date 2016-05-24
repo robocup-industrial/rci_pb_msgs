@@ -1,8 +1,8 @@
 #*****************************************************************************
-#           Makefile Build System for LLSF RefBox: Logging Utils
+#                      Makefile Build System for Fawkes
 #                            -------------------
-#   Created on Sat May 28 00:16:57 2011
-#   Copyright (C) 2006-2011 by Tim Niemueller, AllemaniACs RoboCup Team
+#   Created on Wed Sep 06 02:39:46 2006
+#   Copyright (C) 2006 by Tim Niemueller, AllemaniACs RoboCup Team
 #
 #*****************************************************************************
 #
@@ -13,12 +13,11 @@
 #
 #*****************************************************************************
 
-BASEDIR = ../..
+BASEDIR = .
+
+SUBDIRS = src
+
 include $(BASEDIR)/etc/buildsys/config.mk
-
-PROTOBUF_all = atwork_device_pb_msgs
-MSGS_atwork_device_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
-
-include $(BUILDSYSDIR)/protobuf.mk
-include $(BUILDSYSDIR)/base.mk
+include $(BUILDSYSDIR)/rules.mk
+include $(BUILDSYSDIR)/root/root.mk
 
