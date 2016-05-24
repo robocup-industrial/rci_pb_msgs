@@ -10,11 +10,11 @@
 BASEDIR = ../..
 
 include $(BASEDIR)/etc/buildsys/config.mk
-include $(BASEDIR)/rockin/rockin.mk
+include $(BASEDIR)/src/rci_pb_msgs.mk
 
-PROTOBUF_all = rockin_msgs
+PROTOBUF_all = atwork_pb_msgs
 
-MSGS_rockin_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
+MSGS_atwork_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
 
 include $(BUILDSYSDIR)/protobuf.mk
 include $(BUILDSYSDIR)/base.mk
