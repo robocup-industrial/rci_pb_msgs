@@ -37,7 +37,7 @@ package atwork_pb_msgs;
 import "Inventory.proto";
 import "Time.proto";
 
-option java_package = "org.atwork.common_msgs";
+option java_package = "org.robocup_industrial.atwork_pb_msgs";
 option java_outer_classname = "TransportationTaskProtos";
 
 message TransportationTask {

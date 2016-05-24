@@ -26,9 +26,9 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package rockin_msgs;
+package atwork_pb_msgs;
 
-option java_package = "org.rockin.common_msgs";
+option java_package = "org.robocup_industrial.atwork_pb_msgs";
 option java_outer_classname = "AttentionMessageProtos";
 
 message AttentionMessage {
