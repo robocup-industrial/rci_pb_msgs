@@ -13,12 +13,12 @@
 #
 #*****************************************************************************
 
-BASEDIR = ../../..
+BASEDIR = ../..
 include $(BASEDIR)/etc/buildsys/config.mk
-include $(BASEDIR)/rockin/rockin.mk
+include $(BASEDIR)/src/rci_pb_msgs.mk
 
-PROTOBUF_all = rockin_plugin_msgs
-MSGS_rockin_plugin_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
+PROTOBUF_all = atwork_device_pb_msgs
+MSGS_atwork_device_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
 
 include $(BUILDSYSDIR)/protobuf.mk
 include $(BUILDSYSDIR)/base.mk
