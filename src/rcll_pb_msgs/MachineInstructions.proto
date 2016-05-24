@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  MachineInstructions.proto - LLSF Protocol - Machine instruction messages
+ *  MachineInstructions.proto - RCLL Protocol - Machine instruction messages
  *
  *  Created: Thu Apr 16 14:19:07 2015
  *  Copyright  2013  Tim Niemueller [www.niemueller.de]
@@ -34,12 +34,12 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "ProductColor.proto";
 import "Team.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "MachineInstructionProtos";
 
 enum MachineSide {

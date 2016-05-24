@@ -34,11 +34,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "Team.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "RobotCommandsProtos";
 
 // Set a robot's maintenance state

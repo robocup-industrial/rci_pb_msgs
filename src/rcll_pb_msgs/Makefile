@@ -17,9 +17,9 @@ BASEDIR = ../..
 
 include $(BASEDIR)/etc/buildsys/config.mk
 
-PROTOBUF_all = llsf_msgs
+PROTOBUF_all = rcll_pb_msgs
 
-MSGS_llsf_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
+MSGS_rcll_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
 
 MachineReport.pb.cpp: | Team.pb.cpp
 

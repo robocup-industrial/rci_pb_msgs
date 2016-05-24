@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  MachineInfo.proto - LLSF Protocol - Machine Specification message
+ *  MachineInfo.proto - RCLL Protocol - Machine Specification message
  *
  *  Created: Mon Feb 25 11:36:50 2013
  *  Copyright  2013  Tim Niemueller [www.niemueller.de]
@@ -34,7 +34,7 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "Pose2D.proto";
 import "ProductColor.proto";
@@ -42,7 +42,7 @@ import "Team.proto";
 import "Zone.proto";
 import "MachineInstructions.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "MachineInfoProtos";
 
 enum LightColor {

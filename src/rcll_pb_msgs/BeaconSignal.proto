@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  BeaconSignal.proto - LLSF Protocol - Beacon Signal
+ *  BeaconSignal.proto - RCLL Protocol - Beacon Signal
  *
  *  Created: Mon Feb 11 16:35:02 2013
  *  Copyright  2013  Tim Niemueller [www.niemueller.de]
@@ -34,14 +34,14 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "Time.proto";
 import "Team.proto";
 import "Pose2D.proto";
 
 option java_package =
-  "org.robocup_logistics.llsf_msgs";
+  "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname =
   "BeaconSignalProtos";
 
@@ -66,6 +66,6 @@ message BeaconSignal {
   optional Team   team_color = 6;
 
   // Position and orientation of the
-  // robot on the LLSF playing field
+  // robot on the RCLL playing field
   optional Pose2D pose = 7;
 }

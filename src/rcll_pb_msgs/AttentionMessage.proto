@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  AttentionMessage.proto - LLSF Protocol - Attention Message Display
+ *  AttentionMessage.proto - RCLL Protocol - Attention Message Display
  *
  *  Created: Sun Feb 24 23:06:35 2013
  *  Copyright  2013  Tim Niemueller [www.niemueller.de]
@@ -34,11 +34,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "Team.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "AttentionMessageProtos";
 
 message AttentionMessage {

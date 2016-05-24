@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  MachineReport.proto - LLSF Protocol - Exploration Phase Report
+ *  MachineReport.proto - RCLL Protocol - Exploration Phase Report
  *
  *  Created: Thu Mar 07 16:07:15 2013
  *  Copyright  2013  Tim Niemueller [www.niemueller.de]
@@ -34,13 +34,13 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "MachineInfo.proto";
 import "Team.proto";
 import "Zone.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "MachineReportProtos";
 
 message MachineReportEntry {

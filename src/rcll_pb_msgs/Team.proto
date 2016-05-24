@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  Team.proto - LLSF Protocol - Team Identifier
+ *  Team.proto - RCLL Protocol - Team Identifier
  *
  *  Created: Mon Mar 24 18:07:22 2014
  *  Copyright  2013-2014  Tim Niemueller [www.niemueller.de]
@@ -34,9 +34,9 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "TeamProtos";
 
 // Team identifier.

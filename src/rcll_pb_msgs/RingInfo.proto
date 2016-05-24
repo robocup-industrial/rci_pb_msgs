@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *  RingInfo.proto - LLSF Protocol - Ring information
+ *  RingInfo.proto - RCLL Protocol - Ring information
  *
  *  Created: Wed Apr 22 17:14:14 2015
  *  Copyright  2013-2015  Tim Niemueller [www.niemueller.de]
@@ -34,11 +34,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package llsf_msgs;
+package rcll_pb_msgs;
 
 import "ProductColor.proto";
 
-option java_package = "org.robocup_logistics.llsf_msgs";
+option java_package = "org.robocup_industrial.rcll_pb_msgs";
 option java_outer_classname = "RingInfoProtos";
 
 
