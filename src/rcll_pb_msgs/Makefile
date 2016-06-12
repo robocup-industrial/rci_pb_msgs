@@ -20,8 +20,11 @@ include $(BASEDIR)/etc/buildsys/config.mk
 PROTOBUF_all = rcll_pb_msgs
 
 MSGS_rcll_pb_msgs = $(notdir $(patsubst %.proto,%,$(wildcard $(SRCDIR)/*.proto)))
+LIBS_all = $(LIBDIR)/protobuf/rcll_pb_msgs.so
+PKGCONFIG_all = $(PKGCONFDIR)/rcll_pb_msgs.pc
 
 MachineReport.pb.cpp: | Team.pb.cpp
 
 include $(BUILDSYSDIR)/protobuf.mk
+include $(BUILDSYSDIR)/genpkgconfig.mk
 include $(BUILDSYSDIR)/base.mk
