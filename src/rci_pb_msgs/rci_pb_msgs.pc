@@ -1,0 +1,5 @@
+Name: rci_pb_msgs
+Description: Library for protobuf messages used in all competitions of the RoboCup Industrial League
+Version: @VERSION@
+Cflags: -I@EXEC_INCDIR@
+Libs: -lrci_pb_msgs

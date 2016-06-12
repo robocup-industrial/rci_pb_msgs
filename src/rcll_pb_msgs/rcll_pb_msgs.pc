@@ -1,0 +1,5 @@
+Name: rcll_pb_msgs
+Description: Library for protobuf messages used in RoboCup Logistics League competitions
+Version: @VERSION@
+Cflags: -I@EXEC_INCDIR@
+Libs: -lrcll_pb_msgs

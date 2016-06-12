@@ -1,0 +1,5 @@
+Name: atwork_device_pb_msgs 
+Description: Library of Protobuf Messages used by RoboCup@Work devices in the test bed
+Version: @VERSION@
+Cflags: -I@EXEC_INCDIR@
+Libs: -latwork_device_pb_msgs
