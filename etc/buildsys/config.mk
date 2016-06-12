@@ -17,6 +17,14 @@ ifndef __buildsys_config_mk_
 __buildsys_config_mk_ := 1
 
 BUILDSYSDIR    ?= $(abspath $(BASEDIR)/etc/buildsys)
+
+# Due to a limitation in GNU Make,
+# cf. http://savannah.gnu.org/bugs/?712
+ifneq ($(words $(abspath $(BUILDSYSDIR))),1)
+  $(error Path to Fawkes may not contain spaces. \
+          Move Fawkes to another location and call make again)
+endif
+
 FAWKES_BASEDIR  = $(BASEDIR)
 TOP_BASEDIR     = $(BASEDIR)
 
@@ -72,14 +80,14 @@ else
   endif
 endif
 
-BUILD_TYPE ?= fawkes
+BUILD_TYPE ?= rci_pb_msgs
 ARCH=$(shell uname -m)
 OS=$(shell uname -s)
-DISTRO=$(shell sed -n "/^ID/ s/ID=//p" /etc/os-release)
+DISTRO=$(if $(wildcard /etc/os-release),$(shell sed -n "/^ID=/ s/ID=//p" /etc/os-release),unknown)
 
 
 ### Directories
-SRCDIR       ?= .
+SRCDIR       ?= $(abspath .)
 OBJDIR        = .objs_$(BUILD_TYPE)
 DEPDIR        = $(abspath $(SRCDIR)/.deps_$(BUILD_TYPE))
 BINDIR        = $(abspath $(TOP_BASEDIR)/bin)
@@ -90,6 +98,7 @@ PLUGINDIR     = $(abspath $(TOP_BASEDIR)/plugins)
 RESDIR        = $(abspath $(TOP_BASEDIR)/res)
 LIBSRCDIR     = $(abspath $(FAWKES_BASEDIR)/src/libs)
 EXTLIBDIR     = $(abspath $(LIBSRCDIR)/extlib)
+PKGCONFDIR    = $(abspath $(LIBDIR)/pkgconfig)
 IFACEDIR      = $(abspath $(TOP_BASEDIR)/lib/interfaces)
 IFACESRCDIR   = $(abspath $(TOP_BASEDIR)/src/libs/interfaces)
 LOGDIR        = $(abspath $(TOP_BASEDIR)/log)
@@ -105,7 +114,8 @@ EXEC_BASEDIR  ?= $(TOP_BASEDIR)
 EXEC_BINDIR    = $(abspath $(EXEC_BASEDIR)/bin)
 EXEC_LIBDIR    = $(abspath $(EXEC_BASEDIR)/lib)
 EXEC_CONFDIR   = $(abspath $(EXEC_BASEDIR)/cfg)
-EXEC_USERDIR   = .fawkes
+EXEC_PKGCONFDIR= $(abspath $(EXEC_LIBDIR)/pkgconfig)
+EXEC_USERDIR   = .rci_pb_msgs
 EXEC_PLUGINDIR = $(abspath $(EXEC_BASEDIR)/plugins)
 EXEC_RESDIR    = $(abspath $(EXEC_BASEDIR)/res)
 EXEC_IFACEDIR  = $(abspath $(EXEC_BASEDIR)/lib/interfaces)
@@ -116,8 +126,6 @@ EXEC_MANDIR    = $(abspath $(EXEX_DOCDIR)/man)
 
 # Some paths divert in submodule configuration
 ifeq ($(SUBMODULE_INTERN),1)
-  RESDIR      = $(abspath $(FAWKES_BASEDIR)/res)
-  EXEC_RESDIR = $(abspath $(FAWKES_BASEDIR)/res)
   IFACESRCDIR = $(abspath $(FAWKES_BASEDIR)/src/libs/interfaces)
 endif
 
@@ -133,6 +141,7 @@ PKGCONFIG = $(shell which pkg-config)
 NM=nm
 ASCIIDOC=asciidoc
 ASCIIDOC_A2X=a2x
+LUADOC=luadoc
 ifneq ($(wildcard /bin/bash),)
   SHELL = /bin/bash
 else
@@ -142,15 +151,17 @@ else
     $(error Only bash is supported as shell, but it cannot be found.)
   endif
 endif
+# On FreeBSD, use clang by default
+ifeq ($(OS),FreeBSD)
+  CC = clang
+  LD = clang
+endif
 
-#REFBOX_VERSION_MAJOR = $(lastword $(shell grep "\#define FAWKES_VERSION_MAJOR" $(LIBSRCDIR)/core/version.h))
-#REFBOX_VERSION_MINOR = $(lastword $(shell grep "\#define FAWKES_VERSION_MINOR" $(LIBSRCDIR)/core/version.h))
-#REFBOX_VERSION_MICRO = $(lastword $(shell grep "\#define FAWKES_VERSION_MICRO" $(LIBSRCDIR)/core/version.h))
-REFBOX_VERSION_MAJOR = 0
-REFBOX_VERSION_MINOR = 1
-REFBOX_VERSION_MICRO = 0
-DEFAULT_SOVER        = $(REFBOX_VERSION_MAJOR).$(REFBOX_VERSION_MINOR).$(REFBOX_VERSION_MICRO)
-REFBOX_VERSION       = $(REFBOX_VERSION_MAJOR).$(REFBOX_VERSION_MINOR).$(REFBOX_VERSION_MICRO)
+RCI_PB_MSGS_VERSION_MAJOR = $(lastword $(shell grep "\#define RCI_PB_MSGS_VERSION_MAJOR" $(BASEDIR)/src/rci_pb_msgs/version.h))
+RCI_PB_MSGS_VERSION_MINOR = $(lastword $(shell grep "\#define RCI_PB_MSGS_VERSION_MINOR" $(BASEDIR)/src/rci_pb_msgs/version.h))
+RCI_PB_MSGS_VERSION_MICRO = $(lastword $(shell grep "\#define RCI_PB_MSGS_VERSION_MICRO" $(BASEDIR)/src/rci_pb_msgs/version.h))
+DEFAULT_SOVER        = $(RCI_PB_MSGS_VERSION_MAJOR).$(RCI_PB_MSGS_VERSION_MINOR).$(RCI_PB_MSGS_VERSION_MICRO)
+RCI_PB_MSGS_VERSION       = $(RCI_PB_MSGS_VERSION_MAJOR).$(RCI_PB_MSGS_VERSION_MINOR).$(RCI_PB_MSGS_VERSION_MICRO)
 
 ### Features ###
 # If gcc is used, enable OpenMP?
@@ -170,6 +181,7 @@ LIBDIRS_EXEC_BASE= $(EXEC_LIBDIR) $(EXEC_LIBDIR)/interfaces
 LDFLAGS_RPATH    = $(addprefix -Wl$(COMMA)-rpath -Wl$(COMMA),$(LIBDIRS_EXEC_BASE) $(LIBDIRS_BASE) $(LIBDIRS))
 DEFAULT_INCLUDES = $(addprefix -I,$(BASESRCDIRS) $(LIBSRCDIRS))
 CFLAGS_DEFS      = -DBASEDIR=\"$(abspath $(TOP_BASEDIR))\" \
+		   -DFAWKES_BASEDIR=\"$(abspath $(FAWKES_BASEDIR))\" \
 		   -DBINDIR=\"$(EXEC_BINDIR)\" -DLIBDIR=\"$(EXEC_LIBDIR)\" \
 		   -DPLUGINDIR=\"$(EXEC_PLUGINDIR)\" -DIFACEDIR=\"$(EXEC_IFACEDIR)\" \
 		   -DCONFDIR=\"$(EXEC_CONFDIR)\" -DUSERDIR=\"$(EXEC_USERDIR)\" \
@@ -178,9 +190,10 @@ CFLAGS_DEFS      = -DBASEDIR=\"$(abspath $(TOP_BASEDIR))\" \
 		   -DBUILDTYPE=\"$(BUILD_TYPE)\" -DSOEXT=\"$(SOEXT)\"
 
 CFLAGS_MINIMUM   = -fPIC -pthread $(DEFAULT_INCLUDES) $(CFLAGS_DEFS)
-LDFLAGS_MINIMUM  = $(LIBDIRS_BASE:%=-L%) -rdynamic -fPIC -Wl,--no-undefined -lstdc++
+LDFLAGS_MINIMUM  = $(LIBDIRS_BASE:%=-L%) -rdynamic -fPIC -lstdc++
+LDFLAGS_NO_UNDEF = -Wl,--no-undefined
 CFLAGS_BASE      = $(CFLAGS_MINIMUM) $(CFLAGS_EXTRA)
-LDFLAGS_BASE     =  $(LDFLAGS_MINIMUM) $(LDFLAGS_RPATH)
+LDFLAGS_BASE     =  $(LDFLAGS_MINIMUM) $(LDFLAGS_RPATH) $(LDFLAGS_EXTRA)
 LDFLAGS_SHARED   = -shared
 ifeq ($(OS),FreeBSD)
   DEFAULT_INCLUDES += -I/usr/local/include
@@ -196,6 +209,7 @@ export LD_LIBRARY_PATH= $(call merge,:, $(LIBDIRS_BASE) $(LIBDIRS) $(SYS_LD_LIBR
 nametr = $(subst /,_,$(subst -,_,$1))
 
 ifeq ($(COLORED),1)
+TGRAY		= \033[0;37m
 TBOLDGRAY	= \033[1;30m
 TBLUE		= \033[0;34m
 TBOLDBLUE	= \033[1;34m
@@ -217,6 +231,12 @@ TCYANBG		= \033[46m
 TGREYBG		= \033[47m
 endif
 
+### If we are in the fawkes sub module include the top config 
+ifeq ($(SUBMODULE_INTERN),1)
+  include $(TOP_BASEDIR)/etc/buildsys/config.mk
+endif
+
+
 ### Check if there are special config files for the chosen compiler
 ifneq ($(wildcard $(BUILDSYSDIR)/$(CC).mk),)
   include $(BUILDSYSDIR)/$(CC).mk
@@ -232,12 +252,6 @@ else
     endif
   endif
 endif
-
-### If we are in the fawkes sub module include the top config 
-ifeq ($(SUBMODULE_INTERN),1)
-  include $(TOP_BASEDIR)/etc/buildsys/config.mk
-endif
-
 
 ### Check if there is a local config for this directory
 ifneq ($(SRCDIR),.)
@@ -255,8 +269,15 @@ ifeq ($(DO_32BIT_BUILD),1)
   LDFLAGS_BASE += -m32
 
   SYSLIBDIR32 = /usr/lib$(if $(wildcard /usr/lib32),32)
-  PKGCONFIG = PKG_CONFIG_PATH=$(SYSLIBDIR32)/pkgconfig PKG_CONFIG_LIBDIR=$$PKG_CONFIG_PATH; pkg-config
+  export PKG_CONFIG_PATH   = $(SYSLIBDIR32)/pkgconfig$(if $(PKG_CONFIG_PATH),:$(PKG_CONFIG_PATH))
+  export PKG_CONFIG_LIBDIR = $(SYSLIBDIR32)/pkgconfig$(if $(PKG_CONFIG_LIBDIR),:$(PKG_CONFIG_LIBDIR))
   ARCH=i386
+endif
+
+ifeq ($(ARCH),x86_64)
+  ifeq ($(DISTRO),fedora)
+    LIB_SUFFIX=64
+  endif
 endif
 
 endif # __buildsys_config_mk_
