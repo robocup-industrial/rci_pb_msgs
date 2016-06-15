@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>atwork_pb_msgs</name>
+  <version>0.0.1</version>
+  <description>
+    RoboCup@Work protobuf messages.
+    These messages are used in the RoboCup@Work League to communicate with the Referee Box.
+  </description>
+
+  <maintainer email="alexander.moriarty@brsu.de">Alexander Moriarty</maintainer>
+
+  <license>GPLv2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

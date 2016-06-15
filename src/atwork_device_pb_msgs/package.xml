@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <name>atwork_device_pb_msgs</name>
+  <version>0.0.1</version>
+  <description>
+    RoboCup@Work Device protobuf messages.
+    These messages are used for communication between the RoboCup Industrial Referee Box
+    and the Devices in the RoboCup@Work Arena.
+  </description>
+
+  <maintainer email="alexander.moriarty@brsu.de">Alexander Moriarty</maintainer>
+
+  <license>GPLv2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

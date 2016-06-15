@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>rci_pb_msgs</name>
+  <version>0.0.1</version>
+  <description>
+    RoboCup Industrial protobuf messages.
+    Common messages used by the RoboCup Industrial Referee Box and shared by all leagues in RoboCup Industrial.
+  </description>
+
+  <maintainer email="alexander.moriarty@brsu.de">Alexander Moriarty</maintainer>
+
+  <license>GPLv2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>
